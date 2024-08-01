@@ -1,0 +1,185 @@
+// styles.scss
+@use 'sass:math';
+@import 'colors.scss';
+@import 'nav.scss';
+
+/* Variables */
+$fontFamily1: Arial, Helvetica, Sans-Serif;
+$fontFamily2: 'Sacramento', cursive;
+$fontSizeH1: 3em;
+$fontSizeH2: 2.5em;
+$fontSizeH3: 2em;
+$fontSizeSmall: 0.85em;
+
+html {
+  // Operations
+  font-size: math.div(0.8em, 1) + 0.2; // Correct division using math.div
+  width: calc(math.div(100%, 2) + 50%); // Correct division using calc and math.div
+}
+
+body {
+  font-family: $fontFamily1;
+  background: $backgroundColor1;
+}
+
+header {
+  height: 50px;
+  width: 1350px;
+  margin: 0.8em auto 1em auto;
+}
+
+main {
+  background: $mainColor;
+  width: 1350px;
+  min-height: 535px;
+  padding: 1.5%;
+  margin: 0 auto;
+
+  #intro-image {
+    float: left;
+    width: 800px;
+
+    img {
+      width: 800px;
+    }
+  }
+
+  #intro-text {
+    width: 550px;
+    height: 407px;
+    float: left;
+    background: $sectionColor;
+    text-align: center;
+    padding-top: 8em;
+
+    h3 {
+      font-size: $fontSizeH3;
+      color: $color3;
+    }
+
+    span {
+      font-family: $fontFamily2;
+      font-size: 2em;
+    }
+  }
+}
+
+footer {
+  width: 1350px;
+  margin: 2em auto;
+  padding-left: 80px;
+  font-size: $fontSizeSmall;
+}
+
+// @extend 
+button {
+  color: $color4;
+  width: 100px;
+  height: 40px;
+  background: $backgroundColor1;
+  margin-top: 2em;
+}
+.submit-button {
+  @extend button;
+  border: 1px solid $color3; // Corrected border declaration
+}
+
+/* Nesting */
+nav {
+  font: {
+    size: 1em;
+    weight: bold; // Corrected from font-weight to weight
+  }
+  float: left;
+  ul {
+    list-style-type: none;
+    li {
+      float: left;
+      margin: 0 5px 0 0;
+      color: $color4;
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+        color: $color4;
+      }
+    }
+  }
+}
+
+html {
+  font-size: 1em;
+  width: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, Sans-Serif;
+  background: #daaa0e;
+}
+
+header {
+  height: 50px;
+  width: 1350px;
+  margin: 0.8em auto 1em auto;
+}
+
+main {
+  background: white;
+  width: 1350px;
+  min-height: 535px;
+  padding: 1.5%;
+  margin: 0 auto;
+
+  #intro-image {
+    float: left;
+    width: 800px;
+
+    img {
+      width: 800px;
+    }
+  }
+
+  #intro-text {
+    width: 550px;
+    height: 407px;
+    float: left;
+    background: #d4d5d8;
+    text-align: center;
+    padding-top: 8em;
+
+    h3 {
+      font-size: 2em;
+      color: #313130;
+    }
+
+    span {
+      font-family: 'Sacramento', cursive;
+      font-size: 2em;
+    }
+  }
+}
+
+footer {
+  width: 1350px;
+  margin: 2em auto;
+  padding-left: 80px;
+  font-size: 0.85em;
+}
+
+button {
+  color: white;
+  width: 100px;
+  height: 40px;
+  background: #daaa0e;
+  margin-top: 2em;
+}
+
+.submit-button {
+  color: white;
+  width: 100px;
+  height: 40px;
+  background: #daaa0e;
+  margin-top: 2em;
+  border: 1px solid #313130; // Corrected border declaration
+}
