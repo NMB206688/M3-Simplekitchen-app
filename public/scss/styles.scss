@@ -36,11 +36,13 @@ main {
   margin: 0 auto;
 
   #intro-image {
-    float: left;
-    width: 800px;
+    // float: left;
+    // width: 800px;
+    width: 60%;
 
     img {
-      width: 800px;
+      width: 100%;
+      height: auto;
     }
   }
 
@@ -101,8 +103,8 @@ nav {
         text-decoration: none;
         &:hover {
           text-decoration: underline;
+          color: $color4;
         }
-        color: $color4;
       }
     }
   }

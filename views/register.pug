@@ -1,46 +1,79 @@
+//- extends layout
+
+//- block content
+
+//-     section#intro-text
+//-         span Simple Kitchen
+//-         h3
+//-         | Simple &amp; Comforting 
+//-         br
+//-         |             Recipes All Year Round
+
+//-     section#intro-image
+//-             -data = data || {}
+
+//-     if errors
+//-         ul#errors
+//-         for error in errors
+//-             li= error.msg
+    
+//-     span#headline Register To Subscribe
+
+//-     form(action="." method="POST" class="form-registration")
+//-         label(for="name") Name:
+//-         input(
+//-             type="text"
+//-             id="name"
+//-             name="name"
+//-             class="form-control"
+//-             value=data.name
+//-         )
+
+//-         label(for="email") Email:
+//-         input(
+//-             type="email"
+//-             id="email"
+//-             name="email"
+//-             class="form-control"
+//-             value=data.email
+//-         )
+
+//-         input(
+//-             type="submit" 
+//-             value="Register"
+//-             class="btn btn-lg btn-primary btn-block"
+//-         )
+    
 extends layout
-
 block content
-
-    section#intro-text
-        span Simple Kitchen
-        h3
-        | Simple &amp; Comforting 
-        br
-        |             Recipes All Year Round
-
-    section#intro-image
-            -data = data || {}
-
-    if errors
-        ul#errors
-        for error in errors
-            li= error.msg
-    
-    span#headline Register To Subscribe
-
-    form(action="." method="POST" class="form-registration")
-        label(for="name") Name:
-        input(
-            type="text"
-            id="name"
-            name="name"
-            class="form-control"
-            value=data.name
-        )
-
-        label(for="email") Email:
-        input(
-            type="email"
-            id="email"
-            name="email"
-            class="form-control"
-            value=data.email
-        )
-
-        input(
-            type="submit" 
-            value="Register"
-            class="btn btn-lg btn-primary btn-block"
-        )
-    
+  main
+    #intro-text
+      span Simple Kitchen
+      h3 Simple & Comforting Recipes All Year Round
+      p Pan-seared chicken, Grill shrimp, mac & cheese—need we say more?
+    #intro-image
+    //-   img(src='/images/louisiana-barbecued-shrimp.webp', alt='Louisiana Barbecued Shrimp')
+    .container
+      .row.justify-content-center
+        .col-md-6 
+          .card
+            .card-header
+              h3 Register to subscribe
+            .card-body
+              if errors
+                .alert.alert-danger
+                  ul.mb-0
+                    each error in errors
+                      li ! Error : #{error.msg}
+              form(action='/register', method='post')
+                .form-group
+                  label(for='name') Name:
+                  input.form-control(type='text', name='name', id='name', value=(data ? data.name : ''))
+                .form-group
+                  label(for='email') Email:
+                  input.form-control(type='email', name='email', id='email', value=(data ? data.email : ''))
+                .form-group
+                  button.btn.btn-primary(type='submit') Register
+    script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js')

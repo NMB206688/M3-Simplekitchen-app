@@ -1,25 +1,26 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
 const auth = require('http-auth');
 const { check, validationResult } = require('express-validator');
+const Registration = require('../models/Registration'); // Import the model directly
 
 const router = express.Router();
-const Registration = mongoose.model('Registration');
+
 const basic = auth.basic({
   file: path.join(__dirname, '../users.htpasswd'),
 });
 
+// Render the index page
 router.get('/', (req, res) => {
-  //res.send('It works!');
   res.render('index', { title: 'Index page' });
 });
 
+// Render the registration form
 router.get('/register', (req, res) => {
-  //res.send('It works!');
   res.render('register', { title: 'Registration form' });
 });
 
+// List all registrants with authentication
 router.get('/registrants', basic.check((req, res) => {
   Registration.find()
     .then((registrations) => {
@@ -30,43 +31,36 @@ router.get('/registrants', basic.check((req, res) => {
     });
 }));
 
-// For debugging only, can be commented later
-router.get('/thankyou', (req, res) => {
-  //res.send('It works!');
-  res.render('thankyou', { title: 'Thank you page' });
-});
-
-
-router.post('/', 
-    [
-        check('name')
-        .isLength({ min: 1 })
-        .withMessage('! Error: Please enter a name'),
-        check('email')
-        .isLength({ min: 1 })
-        .withMessage('! Error: Please enter an email'),
-    ],
-    (req, res) => {
-        //console.log(req.body);
-        const errors = validationResult(req);
-        if (errors.isEmpty()) {
-          const registration = new Registration(req.body);
-          registration.save()
-            .then(() => {
-              res.render('thankyou', { title: 'Thank you page' });
-              //res.send('Thank you for your registration!');
-            })
-            .catch((err) => {
-              console.log(err);
-              res.send('Sorry! Something went wrong.');
-            });
-          } else {
-            res.render('register', { 
-                title: 'Registration form',
-                errors: errors.array(),
-                data: req.body,
-             });
-          }
-    });
+// Handle form submission
+router.post('/register', 
+  [
+    check('name')
+      .isLength({ min: 1 })
+      .withMessage('! Error: Please enter a name'),
+    check('email')
+      .isLength({ min: 1 })
+      .withMessage('! Error: Please enter an email'),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const registration = new Registration(req.body);
+      registration.save()
+        .then(() => {
+          res.render('thankyou', { title: 'Thank you page' });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.send('Sorry! Something went wrong.');
+        });
+    } else {
+      res.render('register', { 
+        title: 'Registration form',
+        errors: errors.array(),
+        data: req.body,
+      });
+    }
+  }
+);
 
 module.exports = router;

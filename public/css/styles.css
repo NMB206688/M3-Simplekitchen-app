@@ -46,11 +46,11 @@ main {
   margin: 0 auto;
 }
 main #intro-image {
-  float: left;
-  width: 800px;
+  width: 60%;
 }
 main #intro-image img {
-  width: 800px;
+  width: 100%;
+  height: auto;
 }
 main #intro-text {
   width: 550px;
@@ -104,10 +104,10 @@ nav ul li {
 }
 nav ul li a {
   text-decoration: none;
-  color: rgb(255, 255, 255);
 }
 nav ul li a:hover {
   text-decoration: underline;
+  color: rgb(255, 255, 255);
 }
 
 html {

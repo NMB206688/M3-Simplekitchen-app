@@ -1,16 +1,12 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-mongoose.connection
-  .on('open', () => {
+// Connect to MongoDB without deprecated options
+mongoose.connect(process.env.DATABASE)
+  .then(() => {
     console.log('Mongoose connection open');
   })
-  .on('error', (err) => {
+  .catch((err) => {
     console.log(`Connection error: ${err.message}`);
   });
 
