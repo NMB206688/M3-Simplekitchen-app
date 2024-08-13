@@ -45,6 +45,7 @@
 //-         )
     
 extends layout
+
 block content
   main
     #intro-text
@@ -72,6 +73,12 @@ block content
                 .form-group
                   label(for='email') Email:
                   input.form-control(type='email', name='email', id='email', value=(data ? data.email : ''))
+                .form-group
+                  label(for='username') Username:
+                  input.form-control(type='text', name='username', id='username', value=(data ? data.username : ''))
+                .form-group
+                  label(for='password') Password:
+                  input.form-control(type='password', name='password', id='password')
                 .form-group
                   button.btn.btn-primary(type='submit') Register
     script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js')

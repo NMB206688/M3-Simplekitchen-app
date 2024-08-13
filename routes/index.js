@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const auth = require('http-auth');
 const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const Registration = require('../models/Registration'); // Import the model directly
 
 const router = express.Router();
@@ -34,25 +35,32 @@ router.get('/registrants', basic.check((req, res) => {
 // Handle form submission
 router.post('/register', 
   [
-    check('name')
-      .isLength({ min: 1 })
-      .withMessage('! Error: Please enter a name'),
-    check('email')
-      .isLength({ min: 1 })
-      .withMessage('! Error: Please enter an email'),
+    check('name').isLength({ min: 1 }).withMessage('! Error: Please enter a name'),
+    check('email').isLength({ min: 1 }).withMessage('! Error: Please enter an email'),
+    check('username').isLength({ min: 1 }).withMessage('! Error: Please enter a username'),
+    check('password').isLength({ min: 1 }).withMessage('! Error: Please enter a password')
   ],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
-      const registration = new Registration(req.body);
-      registration.save()
-        .then(() => {
-          res.render('thankyou', { title: 'Thank you page' });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.send('Sorry! Something went wrong.');
+      try {
+        const { name, email, username, password } = req.body;
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const registration = new Registration({ 
+          name, 
+          email, 
+          username, 
+          password: hashedPassword 
         });
+        
+        await registration.save();
+        res.render('thankyou', { title: 'Thank you page' });
+      } catch (err) {
+        console.log(err);
+        res.send('Sorry! Something went wrong.');
+      }
     } else {
       res.render('register', { 
         title: 'Registration form',
